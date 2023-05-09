@@ -2,86 +2,140 @@
 // check out the coin-server example from a previous COMP 426 semester.
 // https://github.com/jdmar3/coinserver
 
+var show1 = 0;
+var show2 = 0;
+var rps = false;
+var rpsls = false;
+var againstOpponent = false;
 
-function showHideShots() {
-    let check = document.getElementById("opponent");
-    let rpsGame = document.getElementById("rps").checked;
-  
-    if (check.checked) {
-      if (rpsGame) {
-        $(".input-container.rps").show();
-        $(".input-container.rpsls").hide(); // Hide Lizard and Spock when playing RPS against an opponent
-        $("label[class='input-container' for='Rock'], label[class='input-container' for='Paper'], label[class='input-container' for='Scissors']").show(); // Show Rock, Paper, and Scissors labels
-        $("label[class='input-container' for='Lizard'], label[class='input-container' for='Spock']").hide();
-      } else {
-        $(".input-container.rps, .input-container.rpsls").show();
-        $("label[class='input-container' for='Rock'], label[class='input-container' for='Paper'], label[class='input-container' for='Scissors'], label[class='input-container' for='Lizard'], label[class='input-container' for='Spock']").show(); // Hide the labels      // Show all labels
+function toggleOG() {
+  var againstOpponent = document.getElementsByClassName("againstOpponent")[0];
+  var lizard = document.getElementsByClassName("rpsls")[0];
+  var spock = document.getElementsByClassName("rpsls")[1];
+  var play = document.getElementsByClassName("play")[0];
+  show1 += 1;
+
+  if (show1 % 2 == 1) {
+      if (show2 % 2 == 1) {
+          play.style.display = 'inline';
       }
+      againstOpponent.style.display = 'inline';
+      lizard.style.display = 'none';
+      spock.style.display = 'none';
+      play.style.display = 'inline';
+      rpsls = false;
+      rps = true
+  }
+  else {
+      againstOpponent.style.display = 'none';
+      play.style.display = 'none';
+      rps = false;
+  }
+}
+
+function toggleNew() {
+  var againstOpponent = document.getElementsByClassName("againstOpponent")[0];
+  var lizard = document.getElementsByClassName("rpsls")[0];
+  var spock = document.getElementsByClassName("rpsls")[1];
+  var play = document.getElementsByClassName("play")[0];
+
+  show1 += 1;
+  
+
+  if (show1 % 2 == 1) {
+       if (show2 % 2 == 1) {
+          play.style.display = 'inline';
+      }
+      againstOpponent.style.display = 'inline';
+      lizard.style.display = 'inline';
+      spock.style.display = 'inline';
+      play.style.display = 'inline';
+      rps = false;
+      rpsls = true;
+  }
+  else {
+      againstOpponent.style.display = 'none';
+      lizard.style.display = 'none';
+      spock.style.display = 'none';
+      play.style.display = 'none';
+      rpsls = false;
+  }
+}
+
+function toggle_against_opponent() {
+  show2 += 1;
+  
+  if ((show1 % 2 == 1) && (show2 % 2 == 1)) {
+    againstOpponent = true;
+  }
+  else {
+    againstOpponent = false;
+  }
+}
+
+function openRules() {
+  var rules = document.getElementsByClassName("rules")[0];
+
+  rules.style.display = 'inline';
+}
+
+function closeRules() {
+  var rules = document.getElementsByClassName("rules")[0];
+
+  rules.style.display = 'none';
+}
+
+function reset() {
+  show1 = 0;
+  show2 = 0;
+  rps = false;
+  rpsls = false;
+  againstOpponent = false;
+  location.reload();
+}
+
+async function play() {
+  var i = document.getElementById("shot");
+  var shot = i.value;  
+
+  var player = document.getElementById("player");
+  var opponent = document.getElementById("opponent");
+  var result = document.getElementById("result");
+  var pop_up = document.getElementsByClassName("results-pop-up")[0];
+  
+  if (rps) {
+    if (shot && againstOpponent) {
+      console.log(shot)
+      const response = await fetch(`/app/rps/play/${shot}`);
+      const data = await response.json();
+
+      player.innerHTML = `Player: ${data.player}.`
+      opponent.innerHTML = `Opponent: ${data.opponent}.`
+      result.innerHTML = `Result: ${data.result}.`
+      pop_up.style.display = 'inline'
+      console.log(data);
     } else {
-      $(".input-container.rps, .input-container.rpsls").hide();
-  
-      $("label[class='input-container' for='Rock'], label[class='input-container' for='Paper'], label[class='input-container' for='Scissors'], label[class='input-container' for='Lizard'], label[class='input-container' for='Spock']").hide(); // Hide the labels
+      const response = await fetch(`/app/rps/play`);
+      const data = await response.json();
+      opponent.innerHTML = `Opponent: ${data.player}.`
+      pop_up.style.display = 'inline'
+      console.log(data);
     }
-  
-    // Hide the radio inputs and show only the input-container elements
-    $("input[type='radio'][name='shot']").hide();
-    $(".input-container").removeClass("selected");
-    $(".input-container").css("display", "inline-flex");
-  }
-  
-  function startOver() {
-    document.getElementById('userinput').reset();
-    document.getElementById('results').innerHTML = '';
-    showHideShots();
-  }
-  
-  function resetShotSelection() {
-      let firstShot = 'Rock';
-  
-    // Reset the selected shot to a random valid option for the chosen game
-    $('input[type=radio][name=shot]').prop('checked', false);
-    $(`input[type=radio][name=shot][value=${firstShot}]`).prop('checked', true);
-  }
-  
-  function getRandomShot(game) {
-    const availableShots = {
-      rps: ['Rock', 'Paper', 'Scissors'],
-      rpsls: ['Rock', 'Paper', 'Scissors', 'Lizard', 'Spock']
-    };
-  
-    const shots = availableShots[game];
-    return shots[Math.floor(Math.random() * shots.length)];
-  }
-  
-  async function playGame() {
-    let game = $('input[type=radio][name=game]:checked').val();
-    let shot = $('input[type=radio][name=shot]:checked').val();
-  
-    // Check if the user has not selected an opponent
-    let opponentCheckbox = document.getElementById('opponent');
-    if (!opponentCheckbox.checked) {
-      shot = getRandomShot(game); // Set the user's shot to a random shot
-    }
-  
-    let baseurl = window.location.href + 'app/';
-    console.log(baseurl);
-    let url = baseurl + game + '/play/' + shot;
-    console.log(url);
-  
-    let response = await fetch(url);
-    let result = await response.json();
-    console.log(result);
-  
-    // Display the results on the page
-    let resultsDiv = document.getElementById('results');
-    if (result.error) {
-      resultsDiv.innerHTML = result.error;
+  } else {
+    if (shot && againstOpponent) {
+      const response = await fetch(`/app/rpsls/play/${shot}`);
+      const data = await response.json();
+      player.innerHTML = `Player: ${data.player}.`
+      opponent.innerHTML = `Opponent: ${data.opponent}.`
+      result.innerHTML = `Result: ${data.result}.`
+      pop_up.style.display = 'inline'
+      console.log(data);
     } else {
-      let you = `You: ${result.player}`;
-      let opponent = `Opponent: ${result.opponent}`;
-      let outcome = `Result: ${result.result}`;
-      resultsDiv.innerHTML = `${you}<br>${opponent}<br>${outcome}`;
+      const response = await fetch(`/app/rpsls/play`);
+      const data = await response.json();
+      opponent.innerHTML = `Opponent: ${data.player}.`
+      pop_up.style.display = 'inline'
+      console.log(data);
     }
-  }
-  
-  
+  }    
+}

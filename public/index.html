@@ -1,58 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Rock</title>
-	<link href="./styles.css" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-	<script src="./scripts.js"></script>
-	<!-- Link to your script file(s) and CSS in here somewhere -->
-</head>
+<html>
+    <head>
+        <title>ROCK PAPER SCISSORS</title>
+        <!-- Link to your script file(s) and CSS in here somewhere -->
+        <script src="./scripts.js"></script>
+        <link rel="stylesheet" href="./styles.css">
+    </head>
+    <body>
+        <h1>Play Rock Paper Scissors!</h1>
 
-<body onload="showHideShots()">
-	<div class="container">
-		<form id="userinput" class="" action="javascript:void(0);">
-            <a href="https://www.wikihow.com/Play-Rock,-Paper,-Scissors">How to Play Rock, Paper, Scissors</a>
-            <br><br>
-            <a href="https://www.wikihow.com/Play-Rock-Paper-Scissors-Lizard-Spock">How to Play Rock, Paper, Scissors, Lizard, Spock</a>
-            <br><br>
-			<input type="radio" id="rps" name="game" value="rps" checked onclick="resetShotSelection(); showHideShots();">
-			<label for="rps">Play rock, paper, scissors?</label>
-			<br><br>
-			<input type="radio" id="rpsls" name="game" value="rpsls" onclick="resetShotSelection(); showHideShots();">
-			<label for="rpsls">Play rock, paper, scissors, lizard, spock?</label>
-			<br><br>
+        <div class = "row">
+        <div class = "first">
+        <h2>Original RPS</h2>
+        <label class="switch">
+            <input type="checkbox" onChange="toggleOG()">
+            <span class="slider"></span>
+        </label>
+        </div>
+    
+        <div class = "second">
+            <h2>Rules</h2>
+            <button class="open-button" onclick="openRules()">Open Rules</button>
+            </label>
+        </div>
 
-			<input type="checkbox" id="opponent" name="playtype" value="opponent"
-				onclick="resetShotSelection(); showHideShots();">
-			<label for="opponent">Play against an opponent?</label>
-			<br><br>
-			<div class="input-container rps">
-				<input type="radio" id="Rock" name="shot" value="Rock" class="shots">
-				<label class="input-container" for="Rock">Rock</label>
-			</div>
-			<div class="input-container rps">
-				<input type="radio" id="Paper" name="shot" value="Paper" class="shots">
-				<label class="input-container" for="Paper">Paper</label>
-			</div>
-			<div class="input-container rps">
-				<input type="radio" id="Scissors" name="shot" value="Scissors" class="shots">
-				<label class="input-container" for="Scissors">Scissors</label>
-			</div>
-			<div class="input-container rpsls">
-				<input type="radio" id="Lizard" name="shot" value="Lizard" class="shots">
-				<label class="input-container" for="Lizard">Lizard</label>
-			</div>
-			<div class="input-container rpsls">
-				<input type="radio" id="Spock" name="shot" value="Spock" class="shots">
-				<label class="input-container" for="Spock">Spock</label>
-			</div>
-			<br><br>
-		    <button type="submit" id="play" name="controls" onclick="playGame()">Play</button>
-		    <button type="submit" id="startover" name="controls" onclick="startOver()">Start Over</button>
+        <div class = "three">
+            <h2>Start Over!</h2>
+            <button class="reset-button" onclick="reset()">RESET</button>
+            </label>
+        </div>
+
+        <div>
+        <h2>New RPSLS</h2>
+        <label class="switch">
+            <input type="checkbox" onChange="toggleNew()">
+            <span class="slider"></span>
+        </label>
+        </div>
+        </div>
+
+        <div class="rules">
+            <div class="rule-set">
+                <p class="version">Rules for Classic Rock Paper Scissors</p>
+                <ul class="info">
+                    <li>Scissors CUTS Paper -> Winner: Scissors</li>
+                    <li>Paper COVERS Rock -> Winner: Paper</li>
+                    <li>Rock CRUSHES Scissors -> Winner: Rock</li>
+                </ul>
+            </div>
+            <div>
+                <p class="version">Rules for the Lizard-Spock Expansion Pack</p>
+                <ul class="info">
+                    <li>Scissors CUTS Paper -> Winner: Scissors</li>
+                    <li>Paper COVERS Rock -> Winner: Paper</li>
+                    <li>Rock SMOOSHES Lizard -> Winner: Rock</li>
+                    <li>Lizard POISONS Spock -> Winner: Lizard</li>
+                    <li>Spock SMASHES Scissors -> Winner: Spock</li>
+                    <li>Scissors DECAPITATES Lizard -> Winner: Scissors</li>
+                    <li>Lizard EATS Paper -> Winner: Lizard</li>
+                    <li>Paper DISPROVES Spock -> Winner: Paper</li>
+                    <li>Spock VAPORIZES Rock -> Winner: Spock</li>
+                    <li>Rock CRUSHES Scissors -> Winner: Rock</li>
+                </ul>
+            </div>
+            <button class="close-button" onclick="closeRules()">Close Rules</button>
+        </div>
+        
+        <div class="againstButton"> 
+        <div class="againstOpponent">
+        <h2>Against Opponent?</h2>
+        <label class="switch">
+            <input type="checkbox" onChange="toggle_against_opponent()">
+            <span class="slider"></span>
+        </label>    
+        </div>
+        </div>
+
+        <div class="play">
+        <div>
+            <label for="shot">Choose a Shot:</label>
+            <select name="shot" id="shot">
+              <option value="rock">ROCK</option>
+              <option value="paper">PAPER</option>
+              <option value="scissors">SCISSORS</option>
+              <option value="lizard" class="rpsls">LIZARD</option>
+              <option value="spock" class="rpsls">SPOCK</option>
+            </select>
             <br><br>
-		</form>
-		<div id="results"></div>
-	</div>
-</body>
+            <button class="play-button" onclick="play()">Throw!</button>
+        </div>
+        </div>
+
+
+        <div class="results-pop-up">
+            <div class="results">
+                <h2>Results</h2>
+                <p id="player" class="result-item"></p>
+                <p id="opponent" class="result-item"></p>
+                <p id="result" class="result-item"></p>
+                <button class="reset-button" onclick="reset()">RESET</button>
+            </div>
+        </div>
+
+    <!-- Your interface markup goes here -->
+    <!-- For interface examples, look in the `/examples/` directory in the root of your starter code repo. -->
+    </body>
 </html>

@@ -53,7 +53,13 @@ function getRandomShot(game) {
 };
 
 async function playGame() {
-  let game = $('input[type=radio][name=game]:checked').val();
+  let game;
+  if ($('input[type=radio][name=game]:checked').val()) {
+    game = 'rpsls';
+  } else {
+    game = '';
+  }
+
   let shot = $('input[type=radio][name=shot]:checked').val();
 
   // Check if the user has not selected an opponent
@@ -63,7 +69,9 @@ async function playGame() {
   }
 
 
-  let url = window.location.href + '/app/' + 'rpsls' + '/play_game/' + shot;
+  let baseurl = window.location.href + 'app/';
+  console.log(baseurl);
+  let url = baseurl + game + '/play_game/' + shot;
   console.log(url);
 
   let response = await fetch(url);

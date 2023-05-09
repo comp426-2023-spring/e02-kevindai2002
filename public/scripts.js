@@ -3,7 +3,7 @@
 // https://github.com/jdmar3/coinserver
 
 
-function showHideShots() {
+function toggleShots() {
   let check = document.getElementById("opponent");
   let rpsGame = document.getElementById("rps").checked;
 
@@ -32,7 +32,7 @@ function showHideShots() {
 function startOver() {
   document.getElementById('userinput').reset();
   document.getElementById('results').innerHTML = '';
-  showHideShots();
+  toggleShots();
 }
 
 function resetShotSelection() {
@@ -44,14 +44,13 @@ function resetShotSelection() {
 }
 
 function getRandomShot(game) {
-  const availableShots = {
+  const game_choices = {
     rps: ['Rock', 'Paper', 'Scissors'],
     rpsls: ['Rock', 'Paper', 'Scissors', 'Lizard', 'Spock']
   };
 
-  const shots = availableShots[game];
-  return shots[Math.floor(Math.random() * shots.length)];
-}
+  return game_choices[game][Math.floor(Math.random()*game_choices[game].length)]
+};
 
 async function playGame() {
   let game = $('input[type=radio][name=game]:checked').val();
@@ -63,9 +62,8 @@ async function playGame() {
     shot = getRandomShot(game); // Set the user's shot to a random shot
   }
 
-  let baseurl = window.location.href + 'app/';
-  console.log(baseurl);
-  let url = baseurl + game + '/play_game/' + shot;
+
+  let url = window.location.href + 'app/' + 'rpsls' + '/play/' + shot;
   console.log(url);
 
   let response = await fetch(url);

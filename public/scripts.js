@@ -65,7 +65,7 @@ async function playGame() {
 
   let baseurl = window.location.href + 'app/';
   console.log(baseurl);
-  let url = baseurl + game + '/play/' + shot;
+  let url = baseurl + game + '/play_game/' + shot;
   console.log(url);
 
   let response = await fetch(url);

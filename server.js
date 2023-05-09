@@ -89,7 +89,7 @@ app.get('/app', function(req, res) {
 });
 
 //Play RPS
-app.get('/app/rps', function(req, res) {
+app.get('/app/rpsls', function(req, res) {
     res.status(200).send(JSON.stringify(play_game(rps_choices)));
 });
 
@@ -99,32 +99,32 @@ app.get('/app/rpsls', function(req, res) {
 });
 
 //Play RPS against an opponent (URLEncoded data body)
-app.get('/app/rps/play', function(req, res) {
+app.get('/app/rpsls/play_game', function(req, res) {
     res.status(200).send(JSON.stringify(play_game(rps_choices,req.query.shot)));
 });
 
 //Play RPSLS against an opponent (URLEncoded data body)
-app.get('/app/rpsls/play', function(req, res) {
+app.get('/app/rpsls/play_game', function(req, res) {
     res.status(200).send(JSON.stringify(play_game(rpsls_choices,req.query.shot)));
 });
 
 //Play RPS against an opponent (JSON data body)
-app.post('/app/rps/play', function(req, res) {
+app.post('/app/rpsls/play_game', function(req, res) {
     res.status(200).send(JSON.stringify(play_game(rps_choices,req.body.shot)));
 });
 
 //Play RPSLS against an opponent (JSON data body)
-app.post('/app/rpsls/play', function(req, res) {
+app.post('/app/rpsls/play_game', function(req, res) {
     res.status(200).send(JSON.stringify(play_game(rpsls_choices,req.body.shot)));
 });
 
 //Play RPS against an opponent (parameter endpoint)
-app.get('/app/rps/play/:shot', function(req, res) {
+app.get('/app/rpsls/play_game/:shot', function(req, res) {
     res.status(200).send(JSON.stringify(play_game(rps_choices,req.params.shot)));
 });
 
 //Play RPSLS against an opponent (parameter endpoint)
-app.get('/app/rpsls/play/:shot', function(req, res) {
+app.get('/app/rpsls/play_game/:shot', function(req, res) {
     res.status(200).send(JSON.stringify(play_game(rpsls_choices,req.params.shot)));
 });
 

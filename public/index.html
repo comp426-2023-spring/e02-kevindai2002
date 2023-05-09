@@ -13,20 +13,20 @@
 	<div class="container">
 		<br id="userinput" class="" action="javascript:void(0);">
             <a href="https://www.wikihow.com/Play-Rock,-Paper,-Scissors">How to Play Rock, Paper, Scissors</a>
-            <br></br>
+            <br><br>
             <a href="https://www.wikihow.com/Play-Rock-Paper-Scissors-Lizard-Spock">How to Play Rock, Paper, Scissors, Lizard, Spock</a>
-            <br></br>
+            <br><br>
 			<input type="radio" id="rps" name="game" value="rps" checked onclick="resetShotSelection(); toggleShots();">
 			<label for="rps">Play rock, paper, scissors?</label>
-			<br></br>
+			<br><br>
 			<input type="radio" id="rpsls" name="game" value="rpsls" onclick="resetShotSelection(); toggleShots();">
 			<label for="rpsls">Play rock, paper, scissors, lizard, spock?</label>
-			<br></br>
+			<br><br>
 
 			<input type="checkbox" id="opponent" name="playtype" value="opponent"
 				onclick="resetShotSelection(); toggleShots();">
 			<label for="opponent">Play against an opponent?</label>
-			<br></br>
+			<br><br>
 			<div class="input-container rps">
 				<input type="radio" id="Rock" name="shot" value="Rock" class="shots">
 				<label class="input-container" for="Rock">Rock</label>
@@ -47,10 +47,10 @@
 				<input type="radio" id="Spock" name="shot" value="Spock" class="shots">
 				<label class="input-container" for="Spock">Spock</label>
 			</div>
-			<br></br>
+			<br><br>
 		    <button type="submit" id="play" name="controls" onclick="playGame()">Play</button>
 		    <button type="submit" id="startover" name="controls" onclick="startOver()">Start Over</button>
-            <br></br>
+            <br><br>
 		</form>
 		<div id="results"></div>
 	</div>

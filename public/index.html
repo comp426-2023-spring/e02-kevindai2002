@@ -1,12 +1,58 @@
-<html>
-    <head>
-        <title>Rock</title>
-        <!-- Link to your script file(s) and CSS in here somewhere -->
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Rock</title>
+	<link href="./styles.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	<script src="./scripts.js"></script>
+	<!-- Link to your script file(s) and CSS in here somewhere -->
+</head>
 
-    <!-- Your interface markup goes here -->
-    <!-- For interface examples, look in the `/examples/` directory in the root of your starter code repo. -->
+<body onload="showHideShots()">
+	<div class="container">
+		<form id="userinput" class="" action="javascript:void(0);">
+            <a href="https://www.wikihow.com/Play-Rock,-Paper,-Scissors">How to Play Rock, Paper, Scissors</a>
+            <br><br>
+            <a href="https://www.wikihow.com/Play-Rock-Paper-Scissors-Lizard-Spock">How to Play Rock, Paper, Scissors, Lizard, Spock</a>
+            <br><br>
+			<input type="radio" id="rps" name="game" value="rps" checked onclick="resetShotSelection(); showHideShots();">
+			<label for="rps">Play rock, paper, scissors?</label>
+			<br><br>
+			<input type="radio" id="rpsls" name="game" value="rpsls" onclick="resetShotSelection(); showHideShots();">
+			<label for="rpsls">Play rock, paper, scissors, lizard, spock?</label>
+			<br><br>
 
-    </body>
+			<input type="checkbox" id="opponent" name="playtype" value="opponent"
+				onclick="resetShotSelection(); showHideShots();">
+			<label for="opponent">Play against an opponent?</label>
+			<br><br>
+			<div class="input-container rps">
+				<input type="radio" id="Rock" name="shot" value="Rock" class="shots">
+				<label class="input-container" for="Rock">Rock</label>
+			</div>
+			<div class="input-container rps">
+				<input type="radio" id="Paper" name="shot" value="Paper" class="shots">
+				<label class="input-container" for="Paper">Paper</label>
+			</div>
+			<div class="input-container rps">
+				<input type="radio" id="Scissors" name="shot" value="Scissors" class="shots">
+				<label class="input-container" for="Scissors">Scissors</label>
+			</div>
+			<div class="input-container rpsls">
+				<input type="radio" id="Lizard" name="shot" value="Lizard" class="shots">
+				<label class="input-container" for="Lizard">Lizard</label>
+			</div>
+			<div class="input-container rpsls">
+				<input type="radio" id="Spock" name="shot" value="Spock" class="shots">
+				<label class="input-container" for="Spock">Spock</label>
+			</div>
+			<br><br>
+		    <button type="submit" id="play" name="controls" onclick="playGame()">Play</button>
+		    <button type="submit" id="startover" name="controls" onclick="startOver()">Start Over</button>
+            <br><br>
+		</form>
+		<div id="results"></div>
+	</div>
+</body>
 </html>

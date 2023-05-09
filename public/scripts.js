@@ -4,13 +4,13 @@
 
 
 function toggleShots() {
-  let check = document.getElementById("opponent");
+  let check = document.getElementById("opp");
   let rpsGame = document.getElementById("rps").checked;
 
   if (check.checked) {
     if (rpsGame) {
       $(".input-container.rps").show();
-      $(".input-container.rpsls").hide(); // Hide Lizard and Spock when playing RPS against an opponent
+      $(".input-container.rpsls").hide(); // Hide Lizard and Spock when playing RPS against an opp
       $("label[class='input-container' for='Rock'], label[class='input-container' for='Paper'], label[class='input-container' for='Scissors']").show(); // Show Rock, Paper, and Scissors labels
       $("label[class='input-container' for='Lizard'], label[class='input-container' for='Spock']").hide();
     } else {
@@ -35,7 +35,7 @@ function startOver() {
   toggleShots();
 }
 
-function resetShotSelection() {
+function reset() {
     let firstShot = 'Rock';
 
   // Reset the selected shot to a random valid option for the chosen game
@@ -43,12 +43,11 @@ function resetShotSelection() {
   $(`input[type=radio][name=shot][value=${firstShot}]`).prop('checked', true);
 }
 
-function getRandomShot(game) {
+function randomize(game) {
   const game_choices = {
     rps: ['Rock', 'Paper', 'Scissors'],
     rpsls: ['Rock', 'Paper', 'Scissors', 'Lizard', 'Spock']
   };
-
   return game_choices[game][Math.floor(Math.random()*game_choices[game].length)]
 };
 
@@ -62,16 +61,15 @@ async function playGame() {
 
   let shot = $('input[type=radio][name=shot]:checked').val();
 
-  // Check if the user has not selected an opponent
-  let opponentCheckbox = document.getElementById('opponent');
+  // Check if the user has not selected an opp
+  let opponentCheckbox = document.getElementById('opp');
   if (!opponentCheckbox.checked) {
-    shot = getRandomShot(game); // Set the user's shot to a random shot
+    shot = randomize(game); // Set the user's shot to a random shot
   }
 
 
-  let baseurl = window.location.href + 'app/';
-  console.log(baseurl);
-  let url = baseurl + game + '/play_game/' + shot;
+  let temp = window.location.href + 'app/';
+  let url = temp + game + '/play_game/' + shot;
   console.log(url);
 
   let response = await fetch(url);
@@ -84,9 +82,9 @@ async function playGame() {
     resultsDiv.innerHTML = result.error;
   } else {
     let you = `You: ${result.player}`;
-    let opponent = `Opponent: ${result.opponent}`;
-    let outcome = `Result: ${result.result}`;
-    resultsDiv.innerHTML = `${you}<br>${opponent}<br>${outcome}`;
+    let opp = `Opponent: ${result.opp}`;
+    let res = `Result: ${result.result}`;
+    resultsDiv.innerHTML = `${you}<br>${opp}<br>${res}`;
   }
 }
 

@@ -63,7 +63,7 @@ async function playGame() {
   }
 
 
-  let url = window.location.href + 'app/' + 'rpsls' + '/play/' + shot;
+  let url = window.location.href + 'app/' + 'rpsls' + '/play_game/' + shot;
   console.log(url);
 
   let response = await fetch(url);
